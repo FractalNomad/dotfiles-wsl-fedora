@@ -127,15 +127,32 @@ link() {
 }
 
 # Top-level dotfiles
-link "$DOTFILES_DIR/home/.zshrc"    "$HOME/.zshrc"
-link "$DOTFILES_DIR/home/.gitconfig" "$HOME/.gitconfig"
+link "$DOTFILES_DIR/home/.zshrc" "$HOME/.zshrc"
+
+# Optional Git config
+if [[ -f "$DOTFILES_DIR/home/.gitconfig" ]]; then
+  echo -n "Apply dotfiles Git config (~/.gitconfig) from this repo? [y/N]: "
+  read -r ans
+  if [[ "$ans" =~ ^[Yy]$ ]]; then
+    link "$DOTFILES_DIR/home/.gitconfig" "$HOME/.gitconfig"
+  else
+    echo "Skipping Git config; existing ~/.gitconfig left untouched."
+  fi
+fi
+
 if [[ -f "$DOTFILES_DIR/home/.p10k.zsh" ]]; then
   link "$DOTFILES_DIR/home/.p10k.zsh" "$HOME/.p10k.zsh"
 fi
 
 # SSH config (GitHub-only config, no keys)
 if [[ -f "$DOTFILES_DIR/home/.ssh/config" ]]; then
-  link "$DOTFILES_DIR/home/.ssh/config" "$HOME/.ssh/config"
+  echo -n "Apply SSH config for GitHub (~/.ssh/config) from this repo? [y/N]: "
+  read -r ans
+  if [[ "$ans" =~ ^[Yy]$ ]]; then
+    link "$DOTFILES_DIR/home/.ssh/config" "$HOME/.ssh/config"
+  else
+    echo "Skipping SSH config; existing ~/.ssh/config left untouched."
+  fi
 fi
 
 # ~/.config subdirectories
