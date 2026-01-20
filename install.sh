@@ -44,7 +44,8 @@ install_repos_and_packages() {
     nmap \
     ripgrep \
     zellij \
-    zoxide
+    zoxide \
+    lsd
 
   echo "==> Installing Kubernetes / Helm tools (optional)..."
   sudo dnf install -y kubectl k9s helm || true
