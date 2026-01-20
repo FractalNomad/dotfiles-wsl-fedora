@@ -137,11 +137,6 @@ install_fonts() {
   fi
 }
 
-install_repos_and_packages
-install_tools_and_shell
-install_fonts
-
-
 link() {
   local src="$1" dst="$2"
   echo "Linking $dst -> $src"
